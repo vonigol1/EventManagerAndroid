@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Хакатон Рязань</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="import_item">QR-код</string>
+    <string name="gallery_item">Чат</string>
+    <string name="slideshow_item">Инфа</string>
+    <string name="tools_item">Чат</string>
+    <string name="communicate_item">Communicate</string>
+    <string name="share_item">Share</string>
+    <string name="send_item">Send</string>
+</resources>
