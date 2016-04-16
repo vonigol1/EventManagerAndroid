@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon" />
+         />
 
     <TextView
         android:layout_width="match_parent"
@@ -29,9 +29,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textsize="49dp"
         android:text="@string/text_main_two"
-        />
+        android:textSize="30dp" />
 
 
 </LinearLayout>
