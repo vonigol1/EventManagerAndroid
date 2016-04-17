@@ -77,6 +77,8 @@ public class FragmentChat extends Fragment {
         // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState);
 
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
+
         thisInflater = inflater;
         this.container = container;
 
@@ -95,10 +97,10 @@ public class FragmentChat extends Fragment {
             public void onClick(View v) {
                 // Sending message to web socket server
                 String message = inputMsg.getText().toString();
-                sendMessageToServer(utils.getSendMessageJSON(message));
-
-                // Clearing the input filed once message was sent
-                inputMsg.setText("");
+                if (!message.equals("")) {
+                    sendMessageToServer(utils.getSendMessageJSON(message));
+                    inputMsg.setText("");
+                }
             }
         });
 
@@ -155,7 +157,7 @@ public class FragmentChat extends Fragment {
     }
 
     private void sendMessageToServer(String message) {
-        if (client != null) {
+        if (client != null && !message.equals("")) {
             client.send(message);
         }
     }
@@ -188,7 +190,12 @@ public class FragmentChat extends Fragment {
 
             } else if (flag.equalsIgnoreCase(TAG_MESSAGE)) {
                 // if the flag is 'message', new message received
-                String fromName = jObj.getString("author");
+                String fromName;
+                try {
+                    fromName = jObj.getString("author");
+                } catch (Exception e) {
+                    fromName = "test";
+                }
                 String message = jObj.getString("message");
                 boolean isSelf = false;
 

@@ -211,15 +211,15 @@ public class MainActivity extends AppCompatActivity
                 output.append(System.getProperty("line.separator") + "Response " + System.getProperty("line.separator") + System.getProperty("line.separator") + responseOutput.toString());
                 JSONObject dataJsonObj = null;
                 dataJsonObj = new JSONObject(responseOutput.toString());
-                JSONObject ststus = dataJsonObj.getJSONObject("ststus");
-                JSONObject token = dataJsonObj.getJSONObject("token");
+                String status = dataJsonObj.getString("status");
+                String token = dataJsonObj.getString("token");
 
 
                 //СОХРАНЕНИЕ В ПЕРФЕРЕНС
                 sPref = getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor ed = sPref.edit();
                 ed.putString("token", token.toString());
-                ed.putString("status",ststus.toString());
+                ed.putString("status",status.toString());
                 ed.commit();
 
 

@@ -14,4 +14,6 @@
     <string name="communicate_item">Communicate</string>
     <string name="share_item">Share</string>
     <string name="send_item">Send</string>
+    <string name="text_main_one">Первый рязанский Хакатон</string>
+    <string name="text_main_two">БлаБлабалалалалал</string>
 </resources>
