@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity
     FragmentTools ftools;
     private ProgressDialog progress;
     SharedPreferences sPref;
+    static public int MARGIN_AUTOMATIC = -1;
+
+    /**
+     * Set no margin to be added to the QR code by the zxing engine
+     */
+    static public int MARGIN_NONE = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +62,30 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
-        final Button emailbt=(Button)findViewById(R.id.button);
-        final Button passbt=(Button)findViewById(R.id.button2);
+
+
+        final Button emailbt = (Button) findViewById(R.id.button);
+        final Button passbt = (Button) findViewById(R.id.button2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        final ImageView imageView1=(ImageView)findViewById(R.id.imageView3);
+        final ImageView imageView = (ImageView) findViewById(R.id.imageView4);
+        final ImageView imageView1 = (ImageView) findViewById(R.id.imageView3);
+
+        imageView.setVisibility(View.INVISIBLE);
+        imageView.setImageResource(R.drawable.qrcode);
 
 
-        final EditText emailStr = (EditText)findViewById(R.id.editText);
-        final EditText passStr = (EditText)findViewById(R.id.editText2);
-        imageView.setImageResource(R.drawable.main_image);
+        final EditText emailStr = (EditText) findViewById(R.id.editText);
+        final EditText passStr = (EditText) findViewById(R.id.editText2);
+        //imageView.setImageResource(R.drawable.main_image);
         emailbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new PostClass(emailbt.getContext()).execute();
                 sPref = getPreferences(MODE_PRIVATE);
                 String savedText = sPref.getString("status", "");
-                if (savedText.equals("ok")){
+                if (savedText.equals("ok")) {
 
                     FragmentTransaction ftrans = getFragmentManager().beginTransaction();
                     ftrans.replace(R.id.container, fgallery);
@@ -87,13 +98,15 @@ public class MainActivity extends AppCompatActivity
                     emailStr.setVisibility(View.INVISIBLE);
                     passStr.setVisibility(View.INVISIBLE);
 
-
-
-
-
-
+                    imageView.setVisibility(View.VISIBLE);
 
                 }
+
+//                try {
+//                    imageView1.setImageBitmap(generateBitmap(emailStr.toString(), 150, 150, MARGIN_AUTOMATIC, Color.BLACK, Color.WHITE));
+//                } catch (WriterException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
         passbt.setOnClickListener(new View.OnClickListener() {
@@ -160,10 +173,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
-
         FragmentTransaction ftrans = getFragmentManager().beginTransaction();
 
         if (id == R.id.nav_camara) {
+
+
             ftrans.replace(R.id.container, fimport);
         } else if (id == R.id.nav_gallery) {
             ftrans.replace(R.id.container, fgallery);
@@ -180,25 +194,27 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
             ftrans.replace(R.id.container, fsend);
 
-        } ftrans.commit();
+        }
+        ftrans.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private class PostClass extends AsyncTask<String, Void, Void> {
 
         private final Context context;
 
-        public PostClass(Context c){
+        public PostClass(Context c) {
 
             this.context = c;
 //            this.error = status;
 //            this.type = t;
         }
 
-        protected void onPreExecute(){
-            progress= new ProgressDialog(this.context);
+        protected void onPreExecute() {
+            progress = new ProgressDialog(this.context);
             progress.setMessage("Loading");
             progress.show();
         }
@@ -210,7 +226,7 @@ public class MainActivity extends AppCompatActivity
                 final TextView outputView = (TextView) findViewById(R.id.showOutput);
                 URL url = new URL("http://176.112.197.64:19888/login");
 
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 String urlParameters = "{\"email\":\"admin\",\"pass\":\"admin\"}";
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
@@ -228,13 +244,13 @@ public class MainActivity extends AppCompatActivity
 
                 final StringBuilder output = new StringBuilder("Request URL " + url);
                 output.append(System.getProperty("line.separator") + "Request Parameters " + urlParameters);
-                output.append(System.getProperty("line.separator")  + "Response Code " + responseCode);
-                output.append(System.getProperty("line.separator")  + "Type " + "POST");
+                output.append(System.getProperty("line.separator") + "Response Code " + responseCode);
+                output.append(System.getProperty("line.separator") + "Type " + "POST");
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String line = "";
                 StringBuilder responseOutput = new StringBuilder();
                 System.out.println("output===============" + br);
-                while((line = br.readLine()) != null ) {
+                while ((line = br.readLine()) != null) {
                     responseOutput.append(line);
                 }
                 br.close();
@@ -252,10 +268,6 @@ public class MainActivity extends AppCompatActivity
                 ed.putString("token", token);
                 ed.putString("status", status);
                 ed.commit();
-
-
-
-
 
 
                 MainActivity.this.runOnUiThread(new Runnable() {
@@ -305,6 +317,83 @@ public class MainActivity extends AppCompatActivity
             progress.show();
         }
     }
+    protected void onPostExecute() {
+        progress.dismiss();
+    }
+
+    }
+    class GetClass extends AsyncTask<String, Void, Void> {
+
+        private final Context context;
+
+        public GetClass(Context c){
+            this.context = c;
+        }
+
+        protected void onPreExecute(){
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+
+
+                URL url = new URL("http://176.112.197.64:19888/qr");
+
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                String urlParameters = "avatarofdark@yandex.ru";
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
+                connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
+
+                int responseCode = connection.getResponseCode();
+
+                System.out.println("\nSending 'POST' request to URL : " + url);
+                System.out.println("Post parameters : " + urlParameters);
+                System.out.println("Response Code : " + responseCode);
+
+                final StringBuilder output = new StringBuilder("Request URL " + url);
+                //output.append(System.getProperty("line.separator") + "Request Parameters " + urlParameters);
+                output.append(System.getProperty("line.separator")  + "Response Code " + responseCode);
+                output.append(System.getProperty("line.separator")  + "Type " + "GET");
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line = "";
+                StringBuilder responseOutput = new StringBuilder();
+                System.out.println("output===============" + br);
+                while((line = br.readLine()) != null ) {
+                    responseOutput.append(line);
+                }
+                br.close();
+
+                output.append(System.getProperty("line.separator") + "Response " + System.getProperty("line.separator") + System.getProperty("line.separator") + responseOutput.toString());
+
+//                MainActivity.this.runOnUiThread(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//
+//
+//                    }
+//                });
+
+
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+//        protected void onPostExecute() {
+//            progress.dismiss();
+//        }
+
+    }
+
 
 
 
@@ -354,4 +443,4 @@ public class MainActivity extends AppCompatActivity
 
 //    }
 
-}
+
