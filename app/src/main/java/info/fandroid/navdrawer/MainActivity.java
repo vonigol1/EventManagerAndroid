@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity
     private ProgressDialog progress;
     SharedPreferences sPref;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +57,35 @@ public class MainActivity extends AppCompatActivity
 
 
         final Button emailbt=(Button)findViewById(R.id.button);
-        Button passbt=(Button)findViewById(R.id.button2);
+        final Button passbt=(Button)findViewById(R.id.button2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
+
+
+        final EditText emailStr = (EditText)findViewById(R.id.editText);
+        final EditText passStr = (EditText)findViewById(R.id.editText2);
         imageView.setImageResource(R.drawable.main_image);
         emailbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new PostClass(emailbt.getContext()).execute();
+                sPref = getPreferences(MODE_PRIVATE);
+                String savedText = sPref.getString("status", "");
+                if (savedText.equals("ok")){
+
+                    FragmentTransaction ftrans = getFragmentManager().beginTransaction();
+                    ftrans.replace(R.id.container, fchat);
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
+
+                    emailbt.setVisibility(View.INVISIBLE);
+                    passbt.setVisibility(View.INVISIBLE);
+
+                    emailStr.setVisibility(View.INVISIBLE);
+                    passStr.setVisibility(View.INVISIBLE);
+                }
             }
         });
         passbt.setOnClickListener(new View.OnClickListener() {
@@ -218,8 +238,8 @@ public class MainActivity extends AppCompatActivity
                 //СОХРАНЕНИЕ В ПЕРФЕРЕНС
                 sPref = getPreferences(MODE_PRIVATE);
                 SharedPreferences.Editor ed = sPref.edit();
-                ed.putString("token", token.toString());
-                ed.putString("status",status.toString());
+                ed.putString("token", token);
+                ed.putString("status", status);
                 ed.commit();
 
 
