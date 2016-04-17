@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import info.fandroid.navdrawer.fragments.FragmentGallery;
+import info.fandroid.navdrawer.fragments.FragmentChat;
 import info.fandroid.navdrawer.fragments.FragmentImport;
 import info.fandroid.navdrawer.fragments.FragmentSend;
 import info.fandroid.navdrawer.fragments.FragmentShare;
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FragmentImport fimport;
-    FragmentGallery fgallery;
+    FragmentChat fchat;
     FragmentSend fsend;
     FragmentShare fshare;
     FragmentSlideshow fshow;
@@ -38,15 +38,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -56,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fgallery = new FragmentGallery();
+        fchat = new FragmentChat();
         fimport = new FragmentImport();
         fsend = new FragmentSend();
         fshare = new FragmentShare();
@@ -106,8 +97,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camara) {
             ftrans.replace(R.id.container, fimport);
-        } else if (id == R.id.nav_gallery) {
-            ftrans.replace(R.id.container, fgallery);
+        } else if (id == R.id.nav_chat) {
+            ftrans.replace(R.id.container, fchat);
 
         } else if (id == R.id.nav_slideshow) {
             ftrans.replace(R.id.container, fshow);

@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "info.fandroid.navdrawer"
-        minSdkVersion 19
-        targetSdkVersion 23
+        minSdkVersion 14
+        targetSdkVersion 19
         versionCode 1
         versionName "1.0"
     }
@@ -24,4 +24,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
+    compile 'org.java-websocket:Java-WebSocket:1.3.0'
 }

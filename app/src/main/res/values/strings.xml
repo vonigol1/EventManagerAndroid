@@ -7,9 +7,8 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="import_item">QR-код</string>
-    <string name="gallery_item">Чат</string>
+    <string name="chat_item">Чат</string>
     <string name="slideshow_item">Инфа</string>
     <string name="tools_item">Чат</string>
     <string name="communicate_item">Communicate</string>
