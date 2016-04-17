@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        final ImageView imageView1=(ImageView)findViewById(R.id.imageView3);
 
 
         final EditText emailStr = (EditText)findViewById(R.id.editText);
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity
 
                     emailStr.setVisibility(View.INVISIBLE);
                     passStr.setVisibility(View.INVISIBLE);
+
+
+
 
 
 
@@ -301,6 +305,8 @@ public class MainActivity extends AppCompatActivity
             progress.show();
         }
     }
+
+
 
 
 
