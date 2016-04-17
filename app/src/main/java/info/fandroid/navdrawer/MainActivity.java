@@ -57,15 +57,15 @@ public class MainActivity extends AppCompatActivity
 
 
         final Button emailbt=(Button)findViewById(R.id.button);
-        Button passbt=(Button)findViewById(R.id.button2);
+        final Button passbt=(Button)findViewById(R.id.button2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
 
-        EditText emailStr = (EditText)findViewById(R.id.editText);
-        EditText passStr = (EditText)findViewById(R.id.editText2);
+        final EditText emailStr = (EditText)findViewById(R.id.editText);
+        final EditText passStr = (EditText)findViewById(R.id.editText2);
         imageView.setImageResource(R.drawable.main_image);
         emailbt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +79,13 @@ public class MainActivity extends AppCompatActivity
                     ftrans.replace(R.id.container, fgallery);
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
+
+                    emailbt.setVisibility(View.INVISIBLE);
+                    passbt.setVisibility(View.INVISIBLE);
+
+                    emailStr.setVisibility(View.INVISIBLE);
+                    passStr.setVisibility(View.INVISIBLE);
+
 
 
 
