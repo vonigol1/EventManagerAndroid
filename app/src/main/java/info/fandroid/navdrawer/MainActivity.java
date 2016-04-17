@@ -31,7 +31,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import info.fandroid.navdrawer.fragments.FragmentGallery;
+import info.fandroid.navdrawer.fragments.FragmentChat;
 import info.fandroid.navdrawer.fragments.FragmentImport;
 import info.fandroid.navdrawer.fragments.FragmentSend;
 import info.fandroid.navdrawer.fragments.FragmentShare;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FragmentImport fimport;
-    FragmentGallery fgallery;
+    FragmentChat fchat;
     FragmentSend fsend;
     FragmentShare fshare;
     FragmentSlideshow fshow;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
                 if (savedText.equals("ok")) {
 
                     FragmentTransaction ftrans = getFragmentManager().beginTransaction();
-                    ftrans.replace(R.id.container, fgallery);
+                    ftrans.replace(R.id.container, fchat);
                     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                     drawer.closeDrawer(GravityCompat.START);
 
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        fgallery = new FragmentGallery();
+        fchat = new FragmentChat();
         fimport = new FragmentImport();
         fsend = new FragmentSend();
         fshare = new FragmentShare();
@@ -169,18 +169,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
         int id = item.getItemId();
-
 
         FragmentTransaction ftrans = getFragmentManager().beginTransaction();
 
         if (id == R.id.nav_camara) {
-
-
             ftrans.replace(R.id.container, fimport);
-        } else if (id == R.id.nav_gallery) {
-            ftrans.replace(R.id.container, fgallery);
+        } else if (id == R.id.nav_chat) {
+            ftrans.replace(R.id.container, fchat);
 
         } else if (id == R.id.nav_slideshow) {
             ftrans.replace(R.id.container, fshow);
@@ -201,7 +197,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
     private class PostClass extends AsyncTask<String, Void, Void> {
 
         private final Context context;
